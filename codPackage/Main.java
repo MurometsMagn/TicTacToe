@@ -24,52 +24,49 @@ public class Main {
         String xo = "0";
         int inputNumber = 1;
         Scanner input = new Scanner(System.in);
-        boolean continueInput = true;
         boolean tieFlag = false; //ничья: tie, draw, dead heat, standoff
 
-        outerLoop:
-        for (int j = 0; j < 9; j++) {
-
-            xo = (xo == "X") ? "0" : "X";
+        for (int j = 0; j < 9; j++) { //outerLoop
+            xo = (xo.equals("X")) ? "0" : "X";
             int x = 0, y = 0;
+            boolean continueInput = true; //во избежание лишних итераций j
 
-            innerLoop:
-            do {
+            do { // innerLoop
                 try {
-                    System.out.println("j = " + j);;
-                    String toPrint = (xo == "X") ? "Ход первого игрока (X)" : "Ход второго игрока (0)";
+                    System.out.println("j = " + j);
+                    String toPrint = (xo.equals("X")) ? "Ход первого игрока (X)" : "Ход второго игрока (0)";
                     System.out.println(toPrint);
 
                     System.out.println("Введите номер поля вида: ");
-                    TicTacToe.printArray(TicTacToe.arrayTicTacPos);
+                    TicTacToe.printArray(TicTacToe.arrayTicTac);
                     inputNumber = input.nextInt();
                 } catch (InputMismatchException ex) {
                     System.out.println("Try again. (" + "Incorrect input: an integer is required)");
                     input.nextLine(); //при некорректном вводе -> для перевода курсора с ошибочной позиции
-                    continue innerLoop; //где-то здесь ошибка: при вводе буквы — итератор j увеличивается..
+                    continue;
                 }
 
                 if (inputNumber < 1 || inputNumber > 9) {
                     System.out.println("некорректный ввод: введите число от 0 до 9");
-                    continue innerLoop; // без goto — никуда..
+                    continue;
                 }
                 x = (inputNumber - 1) / 3;
                 y = (inputNumber - 1) % 3;
-                if (continueInput = !TicTacToe.validPosition(x, y)) {
+                if (continueInput = !TicTacToe.validPosition(x, y)) { //как прокомментировать присваивание?
                     System.out.println("Некорректный ввод: поле занято, попробуйте еще раз");
-                    continue innerLoop;
+                    continue;
                 }
             } while (continueInput);
 
             //игровое действие:
             TicTacToe.arrayTicTac[x][y] = xo;
-            TicTacToe.arrayTicTacPos[x][y] = xo; //ненужное дублирование
             if (TicTacToe.winner(x, y, xo)) {
                 System.out.println("Выиграл игрок " + xo);
                 TicTacToe.printArray(TicTacToe.arrayTicTac);
-                //System.exit(0); // заменить флагом? tie, draw, dead heat, standoff
-                break outerLoop; // лучше, чем System.exit(0)?
+                System.exit(0);
+
             }
+            if (j == 8) tieFlag = true; //добавлено
         }
         if (tieFlag) System.out.println("ничья..");
     }

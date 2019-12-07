@@ -5,17 +5,20 @@ package codPackage;
  */
 public class TicTacToe {
 
-    public static String[][] arrayTicTacPos = {{"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}};
-    public static String[][] arrayTicTac = {{" ", " ", " "}, {" ", " ", " "}, {" ", " ", " "}};
+    public static String[][] arrayTicTac = {{"1", "2", "3"}, {"4", "5", "6"}, {"7", "8", "9"}};
+
+    static boolean testWinner(int x, int y, String xo) {
+        return (arrayTicTac[0][y].equals(xo) && arrayTicTac[1][y].equals(xo) && arrayTicTac[2][y].equals(xo));  //горизонталь
+    }
 
     static boolean winner(int x, int y, String xo) {
         return
-                ((arrayTicTac[0][y] == xo && arrayTicTac[1][y] == xo && arrayTicTac[2][y] == xo)  //горизонталь
-                        || (arrayTicTac[x][0] == xo && arrayTicTac[x][1] == xo && arrayTicTac[x][2] == xo) //вертикаль
+                ((arrayTicTac[0][y].equals(xo) && arrayTicTac[1][y].equals(xo) && arrayTicTac[2][y].equals(xo))  //вертикаль
+                        || (arrayTicTac[x][0].equals(xo) && arrayTicTac[x][1].equals(xo) && arrayTicTac[x][2].equals(xo)) //горизонталь
                         || (((x == 0 && y == 0) || (x == 1 && y == 1) || (x == 2 && y == 2)) // лев диагональ
-                        && (arrayTicTac[0][0] == xo && arrayTicTac[1][1] == xo && arrayTicTac[2][2] == xo))
+                        && (arrayTicTac[0][0].equals(xo) && arrayTicTac[1][1].equals(xo) && arrayTicTac[2][2].equals(xo)))
                         || (((x == 2 && y == 0) || (x == 1 && y == 1) || (x == 0 && y == 2)) //пр диагональ
-                        && (arrayTicTac[2][0] == xo && arrayTicTac[1][1] == xo && arrayTicTac[0][2] == xo)));
+                        && (arrayTicTac[2][0].equals(xo) && arrayTicTac[1][1].equals(xo) && arrayTicTac[0][2].equals(xo))));
     }
 
     static void printArray(String[][] arr) {
@@ -29,7 +32,6 @@ public class TicTacToe {
     }
 
     static boolean validPosition(int x, int y) {
-        //return  (!arrayTicTac[x][y].equals("X") || !arrayTicTac[x][y].equals("0"));
-        return  (arrayTicTac[x][y].equals(" "));
+        return (!arrayTicTac[x][y].equals("X") || !arrayTicTac[x][y].equals("0"));
     }
 }
